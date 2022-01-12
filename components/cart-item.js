@@ -18,7 +18,7 @@ export default function CartItem({ product }) {
           <h3 className="text-sm text-gray-600">{product.title}</h3>
           <div className="flex items-center mt-2">
             <button
-              onClick={() => decrease()}
+              onClick={() => increase()}
               className="text-gray-500 focus:outline-none focus:text-gray-600"
             >
               <svg
@@ -37,7 +37,7 @@ export default function CartItem({ product }) {
               {quantity}
             </span>
             <button
-              onClick={() => increase()}
+              onClick={() => decrease()}
               className="text-gray-500 focus:outline-none focus:text-gray-600"
             >
               <svg
