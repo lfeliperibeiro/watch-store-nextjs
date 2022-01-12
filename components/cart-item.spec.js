@@ -32,13 +32,21 @@ describe('CartItem', () => {
     expect(image).toHaveProperty('alt', product.title);
   });
 
-  fit('should display 1 as initial quantity', () => {
+  it('should display 1 as initial quantity', () => {
     renderCartItem();
 
     expect(screen.getByTestId('quantity').textContent).toBe('1');
   });
 
-  it.todo('should increase quantity by 1 when second button is clicked');
+  it('should increase quantity by 1 when second button is clicked', async () => {
+    renderCartItem();
+
+    const [_, button] = screen.getAllByRole('button');
+
+    fireEvent.click(button);
+
+    expect(screen.getByTestId('quantity').textContent).toBe('2');
+  });
 
   it.todo('should decrease quantity by 1 when first button is clicked');
 
