@@ -8,20 +8,18 @@ const product = {
     'https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
 };
 
-const addToCart = jest.fn();
-
-const renderProductCart = () => {
-  render(<CartItem product={product} addToCart={addToCart} />);
+const renderCartItem = () => {
+  render(<CartItem product={product} />);
 };
 
 describe('CartItem', () => {
   it('should render CartItem', () => {
-    renderProductCart();
+    renderCartItem();
     expect(screen.getByTestId('cart-item')).toBeInTheDocument();
   });
 
   it('should display proper content', () => {
-    renderProductCart();
+    renderCartItem();
 
     const image = screen.getByTestId('image');
     expect(
@@ -33,4 +31,16 @@ describe('CartItem', () => {
     expect(screen.getByTestId('image')).toHaveProperty('src', product.image);
     expect(image).toHaveProperty('alt', product.title);
   });
+
+  fit('should display 1 as initial quantity', () => {
+    renderCartItem();
+
+    expect(screen.getByTestId('quantity').textContent).toBe('1');
+  });
+
+  it.todo('should increase quantity by 1 when second button is clicked');
+
+  it.todo('should decrease quantity by 1 when first button is clicked');
+
+  it.todo('should not go below zero in the quantity');
 });
