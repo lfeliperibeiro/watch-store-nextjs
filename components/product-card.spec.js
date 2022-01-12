@@ -1,6 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import ProductCard from './product-card';
-import { backgroundImage } from 'tailwindcss/lib/plugins';
 
 const product = {
   title: 'relógio',
@@ -9,15 +8,20 @@ const product = {
     'https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
 };
 
+const addToCart = jest.fn();
+
+const renderProductCart = () => {
+  render(<ProductCard product={product} addToCart={addToCart} />);
+};
+
 describe('ProductCard', () => {
   it('should render ProductCard', () => {
-    render(<ProductCard product={product} />);
-
+    renderProductCart();
     expect(screen.getByTestId('product-card')).toBeInTheDocument();
   });
 
   it('should display proper content', () => {
-    render(<ProductCard product={product} />);
+    renderProductCart();
 
     expect(
       screen.getByText(new RegExp(product.title, 'i')),
@@ -28,5 +32,16 @@ describe('ProductCard', () => {
     expect(screen.getByTestId('image')).toHaveStyle({
       backgroundImage: product.image,
     });
+  });
+
+  it('should call props addToCart() when button gets clicked', async () => {
+    renderProductCart();
+
+    const button = screen.getByRole('button');
+
+    fireEvent.click(button);
+
+    expect(addToCart).toHaveBeenCalledTimes(1);
+    expect(addToCart).toHaveBeenCalledWith(product);
   });
 });
