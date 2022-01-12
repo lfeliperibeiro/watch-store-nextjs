@@ -20,18 +20,18 @@ describe('CartItem', () => {
     expect(screen.getByTestId('cart-item')).toBeInTheDocument();
   });
 
-  fit('should display proper content', () => {
+  it('should display proper content', () => {
     renderProductCart();
 
+    const image = screen.getByTestId('image');
     expect(
       screen.getByText(new RegExp(product.title, 'i')),
     ).toBeInTheDocument();
     expect(
       screen.getByText(new RegExp(product.price, 'i')),
     ).toBeInTheDocument();
-    // expect(screen.getByTestId('image')).toHaveStyle({
-    //   backgroundImage: product.image,
-    // });
+    expect(screen.getByTestId('image')).toHaveProperty('src', product.image);
+    expect(image).toHaveProperty('alt', product.title);
   });
 
   it('should call props addToCart() when button gets clicked', async () => {
