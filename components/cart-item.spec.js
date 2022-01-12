@@ -33,15 +33,4 @@ describe('CartItem', () => {
     expect(screen.getByTestId('image')).toHaveProperty('src', product.image);
     expect(image).toHaveProperty('alt', product.title);
   });
-
-  it('should call props addToCart() when button gets clicked', async () => {
-    renderProductCart();
-
-    const button = screen.getByRole('button');
-
-    fireEvent.click(button);
-
-    expect(addToCart).toHaveBeenCalledTimes(1);
-    expect(addToCart).toHaveBeenCalledWith(product);
-  });
 });
