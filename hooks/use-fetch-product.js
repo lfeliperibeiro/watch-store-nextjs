@@ -22,4 +22,6 @@ export const useFetchProducts = () => {
 
     return () => mounted = false
   }, []);
+
+  return {products, error}
 }
