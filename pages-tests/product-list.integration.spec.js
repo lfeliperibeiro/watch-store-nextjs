@@ -23,7 +23,7 @@ describe('ProductList', () => {
     expect(screen.getByTestId('product-list')).toBeInTheDocument();
   });
 
-  fit('should render the ProductCard component 10 times', async () => {
+  it('should render the ProductCard component 10 times', async () => {
     server.createList('product', 10);
 
     renderProductList();
@@ -33,7 +33,14 @@ describe('ProductList', () => {
     });
   });
 
-  it.todo('should render the no products message');
+  it('should render the no products message', async () => {
+    renderProductList();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('no-products')).toBeInTheDocument();
+    });
+  });
+
   it.todo('should render the Search component');
   it.todo('should filter the product list when a search is performed');
   it.todo('should display error message when promise rejection');
