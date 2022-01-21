@@ -101,4 +101,29 @@ describe('ProductList', () => {
       expect(screen.getByText(/1 Product$/i)).toBeInTheDocument()
     })
   });
+
+  it('should display proper quantity when list is filtered', async () => {
+    const searchTerm = 'any watch'
+    server.createList('product', 2)
+    server.create('product', {
+      title: searchTerm
+    })
+
+    renderProductList()
+
+    await waitFor(() => {
+      expect(screen.getByText(/3 Products/i)).toBeInTheDocument()
+    })
+
+    const form = screen.getByRole('form')
+    const input = screen.getByRole('searchbox')
+
+    await userEvent.type(input, searchTerm)
+    fireEvent.submit(form)
+
+    await waitFor(() => {
+      expect(screen.getByText(/1 Product$/i)).toBeInTheDocument()
+    })
+
+  });
 });
