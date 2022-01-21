@@ -5,6 +5,9 @@ import userEvent from '@testing-library/user-event';
 const doSearch = jest.fn();
 
 describe('Search', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
   it('should render form', () => {
     render(<Search />);
 
@@ -38,4 +41,17 @@ describe('Search', () => {
 
     expect(doSearch).toHaveBeenLastCalledWith(inputText);
   });
+
+  it('should call doSearch when search input is cleared', async () => {
+    render(<Search doSearch={doSearch} />);
+    const inputText = 'Some text here';
+    const input = screen.getByRole('searchbox');
+
+    await userEvent.type(input, inputText);
+    await userEvent.clear(input)
+
+
+    expect(doSearch).toHaveBeenCalledTimes(1);
+    expect(doSearch).toHaveBeenLastCalledWith('');
+  })
 });
