@@ -59,7 +59,7 @@ describe('ProductList', () => {
 
   it('should filter the product list when a search is performed', async () => {
     const searchTerm = 'any watch'
-  server.createList('product', 2)
+    server.createList('product', 2)
     server.create('product', {
       title: searchTerm
     })
@@ -82,6 +82,15 @@ describe('ProductList', () => {
 
   });
 
-  it.todo('should display the total quantity of products');
+  it('should display the total quantity of products', async () => {
+    server.createList('product', 10)
+
+    renderProductList()
+
+    await waitFor(() => {
+      expect(screen.getByText(/10 Products/i)).toBeInTheDocument()
+    })
+  });
+
   it.todo('should display product (singular) when there is only 1 product');
 });
