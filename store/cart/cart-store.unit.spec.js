@@ -1,4 +1,4 @@
-import {renderHook} from '@testing-library/react-hooks';
+import {renderHook, act} from '@testing-library/react-hooks';
 import { useCartStore } from './index';
 
 describe('Cart Store', () => {
@@ -6,5 +6,23 @@ describe('Cart Store', () => {
     const {result} = renderHook(() => useCartStore())
 
     expect(result.current.state.open).toBe(false);
+  })
+
+  it('should toggle open state', async () => {
+    const {result} = renderHook(() => useCartStore())
+
+    const {actions: {toggle}} = result.current
+
+    expect(result.current.state.open).toBe(false);
+
+    act(() => toggle())
+
+
+    expect(result.current.state.open).toBe(true);
+
+    act(() => toggle())
+
+    expect(result.current.state.open).toBe(false);
+
   })
 })
