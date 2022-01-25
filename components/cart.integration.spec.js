@@ -1,5 +1,5 @@
 import { makeServer } from '../miragejs/server';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { useCartStore } from '../store/cart';
 import { render, screen } from '@testing-library/react';
 import Cart from './cart';
@@ -29,5 +29,15 @@ describe('Cart', () => {
     render(<Cart/>)
 
     expect(screen.getByTestId('cart')).toHaveClass('hidden')
+  });
+
+  it('should not css class "hidden" when using toggle one time', () => {
+    act(() => {
+      toggle()
+    })
+
+    render(<Cart/>)
+
+    expect(screen.getByTestId('cart')).not.toHaveClass('hidden')
   });
 })
