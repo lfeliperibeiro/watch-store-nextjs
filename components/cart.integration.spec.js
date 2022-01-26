@@ -1,11 +1,12 @@
 import { makeServer } from '../miragejs/server';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks/dom';
 import { useCartStore } from '../store/cart';
 import { render, screen } from '@testing-library/react';
 import Cart from './cart';
 import userEvent from '@testing-library/user-event';
+import { setAutoFreeze } from 'immer';
 
-// todo: verify warning
+setAutoFreeze(false)
 
 describe('Cart', (object, method) => {
   let server;
@@ -55,7 +56,6 @@ describe('Cart', (object, method) => {
       userEvent.click(button)
       userEvent.click(button)
     })
-
 
     expect(spy).toHaveBeenCalledTimes(2)
   });
