@@ -1,5 +1,6 @@
 import create from 'zustand'
 import produce from 'immer';
+import product from '../../miragejs/factories/product';
 
 const initialState = {
   open: false,
@@ -20,18 +21,30 @@ export const useCartStore = create(set => {
        })
 
       },
-      reset() {
-        setState((store) => {
-          store.state = initialState
-        })
-      },
       add(product){
         setState(({state}) => {
           if(!state.products.includes(product)) {
             state.products.push(product)
           }
         })
-      }
+      },
+      remove(product) {
+        setState(({ state }) => {
+          const exists = !!state.products.find(({ id }) => id === product.id)
+
+          if (exists) {
+            state.products = state.products.filter(({ id }) => {
+              return id !== product.id
+
+            })
+          }
+        });
+      },
+      reset() {
+        setState((store) => {
+          store.state = initialState
+        })
+      },
     },
   }
 })
