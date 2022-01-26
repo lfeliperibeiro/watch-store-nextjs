@@ -40,6 +40,11 @@ export const useCartStore = create(set => {
           }
         });
       },
+      removeAll() {
+        setState(({state}) => {
+          state.products = []
+        })
+      },
       reset() {
         setState((store) => {
           store.state = initialState
