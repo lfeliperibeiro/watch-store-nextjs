@@ -1,5 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import CartItem from './cart-item';
+import userEvent from '@testing-library/user-event';
+import { renderHook } from '@testing-library/react-hooks';
+import { useCartStore } from '../store/cart';
+import { setAutoFreeze } from 'immer';
+
+setAutoFreeze(false)
 
 const product = {
   title: 'relógio',
@@ -74,5 +80,22 @@ describe('CartItem', () => {
     fireEvent.click(decreaseButton);
 
     expect(quantity.textContent).toBe('0');
+  });
+
+  it('should call remove() when remove button is clicked', async () => {
+    const result = renderHook(() => useCartStore()).result
+
+    const spy = jest.spyOn(result.current.actions, 'remove')
+
+    renderCartItem()
+
+    const button = screen.getByRole('button', { name: /remove/i })
+
+    await userEvent.click(button)
+
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(product)
+
+
   });
 });
