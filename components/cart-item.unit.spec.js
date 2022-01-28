@@ -70,7 +70,18 @@ describe('CartItem', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(product)
+  });
 
+  it('should call decrease() when decrease button is clicked', async () => {
+    const spy = jest.spyOn(result.current.actions, 'decrease')
 
+    renderCartItem()
+
+    const button = screen.getByTestId('decrease')
+
+    await userEvent.click(button)
+
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(product)
   });
 });
