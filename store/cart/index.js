@@ -33,6 +33,24 @@ export const useCartStore = create(set => {
           }
         })
       },
+      increase(product){
+        setState(({state}) => {
+          const localProduct  = state.products.find(({id}) => id === product.id)
+
+          if(localProduct){
+            localProduct.quantity++
+          }
+        })
+      },
+      decrease(product){
+        setState(({state}) => {
+          const localProduct  = state.products.find(({id}) => id === product.id)
+
+          if(localProduct){
+            localProduct.quantity--
+          }
+        })
+      },
       remove(product) {
         setState(({ state }) => {
           const exists = !!state.products.find(({ id }) => id === product.id)
