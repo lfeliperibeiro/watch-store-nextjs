@@ -83,7 +83,7 @@ describe('Cart Store', () => {
     expect(result.current.state.products[0].quantity).toBe(0)
   });
 
-  fit('should not decrease below zero', () =>{
+  it('should not decrease below zero', () =>{
     const product = server.create('product',)
 
     act(() => {
