@@ -58,7 +58,6 @@ export const useCartStore = create(set => {
           if (exists) {
             state.products = state.products.filter(({ id }) => {
               return id !== product.id
-
             })
           }
         });
