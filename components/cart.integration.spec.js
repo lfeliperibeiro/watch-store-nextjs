@@ -30,32 +30,32 @@ describe('Cart', (object, method) => {
     jest.clearAllMocks()
   })
 
-  it('should add css class "hidden" in  the component', () => {
+  it('should add css class "hidden" in the component', () => {
 
     render(<Cart/>)
 
     expect(screen.getByTestId('cart')).toHaveClass('hidden')
   });
 
-  it('should not css class "hidden" when using toggle one time', () => {
-     act(() => {
-      toggle()
-    })
+  it('should remove css class "hidden" in the component', async () => {
+    render(<Cart />)
 
-    render(<Cart/>)
+    const button = screen.getByTestId('close-button')
+
+    await userEvent.click(button)
 
     expect(screen.getByTestId('cart')).not.toHaveClass('hidden')
   });
 
-  it('should call store toggle() twice', () => {
-    render(<Cart/>)
+  it('should call store toggle() twice', async () => {
+    render(<Cart />)
 
     const button = screen.getByTestId('close-button')
 
-    act(() => {
-      userEvent.click(button)
-      userEvent.click(button)
-    })
+
+    await userEvent.click(button)
+    await userEvent.click(button)
+
 
     expect(spy).toHaveBeenCalledTimes(2)
   });
