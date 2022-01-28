@@ -46,8 +46,8 @@ export const useCartStore = create(set => {
         setState(({state}) => {
           const localProduct  = state.products.find(({id}) => id === product.id)
 
-          if(localProduct){
-            localProduct.quantity--
+          if(localProduct && localProduct.quantity > 0){
+              localProduct.quantity--
           }
         })
       },
