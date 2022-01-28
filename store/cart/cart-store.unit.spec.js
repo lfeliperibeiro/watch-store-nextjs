@@ -1,6 +1,7 @@
 import {renderHook, act} from '@testing-library/react-hooks';
 import { useCartStore } from './index';
 import { makeServer } from '../../miragejs/server';
+import product from '../../miragejs/factories/product';
 
 describe('Cart Store', () => {
   let server;
@@ -45,6 +46,16 @@ describe('Cart Store', () => {
     expect(result.current.state.products).toHaveLength(2);
     expect(result.current.state.open).toBe(true);
   })
+
+  it('should assign 1 as initial quantity on product add()', () =>{
+    const product = server.create('product',)
+
+    act(() => {
+      add(product)
+    })
+
+    expect(result.current.state.products[0].quantity).toBe(1)
+  });
 
   it('should not add same product twice', () => {
     const product = server.create('product')
